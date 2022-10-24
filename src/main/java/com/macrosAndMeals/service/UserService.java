@@ -7,6 +7,7 @@ import com.macrosAndMeals.model.User;
 import java.sql.SQLException;
 
 public class UserService {
+    //TODO link to dao
     public String insertUser(User u){
         try {
             UserDao dao = new UserDao();
