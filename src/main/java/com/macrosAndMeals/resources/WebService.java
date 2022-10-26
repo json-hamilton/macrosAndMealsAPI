@@ -17,16 +17,15 @@ public class WebService {
     @GET
     @Path("/user/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers(){
-        UserService userService = new UserService();
-        return userService.selectAllUsers();
+    public Object getAllUsers(){
+        System.out.println(new UserService().selectAllUsers());
+        return new UserService().selectAllUsers().get(0);
     }
 
-    @POST
+    @GET
     @Path("/print")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String sendMsg(Message message) {
-        return "Hello from a RESTful Web service: " + message.getText();
+    public String sendMsg() {
+        return "Hello from a RESTful Web service: " ;
     }
 }

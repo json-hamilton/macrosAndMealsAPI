@@ -29,52 +29,52 @@ public class UserService {
             return e.getMessage();
         }
     }
-//    public List<User> selectAllUsers(){
-//        try {
-//            UserDao dao = new UserDao();
-//            List<User> users = dao.selectAllUsers(ConnectionDB.getConnection());
-//            if (users.isEmpty()) {
-//                System.out.println("SQL ran but returned empty user set");
-//                return null;
-//            }
-//            return users;
-//        }
-//        catch (SQLException e){
-//            System.out.println("SQL ERROR, can't select users: ");
-//            System.out.println(e.getMessage());
-//            return null;
-//        }
-//        catch (Exception e){
-//            System.out.println("NOT A SQL ERROR, Can't select users: ");
-//            System.out.println(e.getMessage());
-//            return null;
-//        }
-//    }
-    public Response selectAllUsers(){
+    public List<User> selectAllUsers(){
         try {
             UserDao dao = new UserDao();
             List<User> users = dao.selectAllUsers(ConnectionDB.getConnection());
-            System.out.println(users);
             if (users.isEmpty()) {
                 System.out.println("SQL ran but returned empty user set");
-                return Response.status(Response.Status.NO_CONTENT).build();
+                return null;
             }
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(users)
-                    .build();
+            return users;
         }
         catch (SQLException e){
             System.out.println("SQL ERROR, can't select users: ");
             System.out.println(e.getMessage());
-            return Response.serverError().build();
+            return null;
         }
         catch (Exception e){
             System.out.println("NOT A SQL ERROR, Can't select users: ");
             System.out.println(e.getMessage());
-            return Response.status(Response.Status.fromStatusCode(444)).build();
+            return null;
         }
     }
+//    public Response selectAllUsers(){
+//        try {
+//            UserDao dao = new UserDao();
+//            List<User> users = dao.selectAllUsers(ConnectionDB.getConnection());
+//            System.out.println(users);
+//            if (users.isEmpty()) {
+//                System.out.println("SQL ran but returned empty user set");
+//                return Response.status(Response.Status.NO_CONTENT).build();
+//            }
+//            return Response
+//                    .status(Response.Status.OK)
+//                    .entity(users)
+//                    .build();
+//        }
+//        catch (SQLException e){
+//            System.out.println("SQL ERROR, can't select users: ");
+//            System.out.println(e.getMessage());
+//            return Response.serverError().build();
+//        }
+//        catch (Exception e){
+//            System.out.println("NOT A SQL ERROR, Can't select users: ");
+//            System.out.println(e.getMessage());
+//            return Response.status(Response.Status.fromStatusCode(444)).build();
+//        }
+//    }
     public User selectUser(int userId){
         try{
             UserDao dao = new UserDao();

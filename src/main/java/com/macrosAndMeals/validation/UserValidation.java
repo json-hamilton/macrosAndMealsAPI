@@ -15,7 +15,7 @@ public class UserValidation {
         }
     }
     public boolean checkUsername(String username) throws IllegalArgumentException{
-        if (username.matches("\\w")){
+        if (username.matches("^[A-Za-z]\\w{3,29}$")){
             if (username.length()<=30 && username.length()>=3){
                 return true;
             }
@@ -28,7 +28,7 @@ public class UserValidation {
         }
     }
     public boolean checkPassword(String password) throws IllegalArgumentException{
-        if (password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,30}$")){
+        if (password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&-+=()])(?=\\S+$).{8,30}$")){
             return true;
         }
         else {
@@ -60,10 +60,12 @@ public class UserValidation {
         }
     }
     public boolean checkDateOfBirth(LocalDate dateOfBirth){
-        if (Period.between(LocalDate.now(),dateOfBirth).getYears()>=18){
+        int age = Math.abs(Period.between(LocalDate.now(),dateOfBirth).getYears());
+        if (age>=18){
             return true;
         }
         else{
+            System.out.println(age);
             throw new IllegalArgumentException("Age is less than 18");
         }
     }

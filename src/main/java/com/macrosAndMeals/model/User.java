@@ -114,8 +114,9 @@ public class User {
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) throws IllegalArgumentException{
-        if (validation.checkDateOfBirth(dateOfBirth)){
-            this.dateOfBirth = dateOfBirth;
+        LocalDate dob = LocalDate.parse(new SimpleDateFormat("dd-MM-yyyy").format(dateOfBirth));
+        if (validation.checkDateOfBirth(dob)){
+            this.dateOfBirth = dob;
         }
     }
 
