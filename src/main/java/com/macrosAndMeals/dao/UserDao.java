@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
+import com.google.gson.Gson;
+
 public class UserDao {
     public String insertUser(User u, Connection c) throws SQLException {
         String insertUserQuery = "insert into User values (0,?,?,?,?,?,?);";
@@ -23,21 +25,16 @@ public class UserDao {
         st.execute();
         return "finished";
     }
-    public List<User> selectAllUsers(Connection c) throws SQLException {
+        public List<User> selectAllUsers(Connection c) throws SQLException {
         String selectUserQuery = "Select userID,username,password,weight,height,gender,dateOfBirth from User";
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery(selectUserQuery);
         List<User> users = new ArrayList<>();
-        while (rs.next()){
-//            System.out.println(rs.getInt("userId"));
-//            System.out.println(rs.getString("username"));
-//            System.out.println(rs.getString("password"));
-//            System.out.println(rs.getDouble("weight"));
-//            System.out.println(rs.getDouble("height"));
-//            System.out.println(rs.getInt("gender"));
-//            System.out.println(rs.getString("dateOfBirth"));
-            LocalDate dob = LocalDate.parse(rs.getString("dateOfBirth"));
-            users.add(new User(rs.getInt("userId"),rs.getString("username"),rs.getString("password"),rs.getDouble("weight"),rs.getDouble("height"),rs.getInt("gender"),LocalDate.parse(new SimpleDateFormat("dd-MM-yyyy").format(dob))));
+        while (rs.next()) {
+
+            LocalDate dob = rs.getDate("dateOfBirth").toLocalDate();
+            System.out.println(dob);
+            users.add(new User(rs.getInt("userId"), rs.getString("username"), rs.getString("password"), rs.getDouble("weight"), rs.getDouble("height"), rs.getInt("gender"), dob));
         }
         return users;
     }

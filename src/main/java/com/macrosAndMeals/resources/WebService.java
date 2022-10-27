@@ -1,8 +1,14 @@
 package com.macrosAndMeals.resources;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.macrosAndMeals.model.User;
 import com.macrosAndMeals.service.UserService;
 import io.swagger.annotations.Api;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -12,15 +18,24 @@ import java.util.List;
 @Path("/api")
 @Api("Macros and Meals API")
 public class WebService {
-    //error with this is it isnt gettinf database connection, look at the console when typimg in http://localhost:8080/api/user/all
-    //also it shouldnt crash the program it should handle r=error surely
+    //this works in the chrome but not on swagger
+    //ok so even the print doesnt work on swagger. so now this is a problem with swagger not me i dont think. w
     @GET
     @Path("/user/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Object getAllUsers(){
-        System.out.println(new UserService().selectAllUsers());
-        return new UserService().selectAllUsers().get(0);
+    public String getAllUsers() {
+        List<User> users = new UserService().selectAllUsers();
+        JSONArray ja = new JSONArray(users);
+        return ja.toString();
     }
+//@GET
+//@Path("/user/all")
+//@Produces(MediaType.APPLICATION_JSON)
+//public List<User> getAllUsers() {
+//    UserService u = new UserService();
+//    return u.selectAllUsers();
+//
+//}
 
     @GET
     @Path("/print")
