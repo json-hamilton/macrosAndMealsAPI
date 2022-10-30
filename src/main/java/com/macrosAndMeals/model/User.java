@@ -1,5 +1,7 @@
 package com.macrosAndMeals.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.macrosAndMeals.validation.UserValidation;
 import org.decimal4j.util.DoubleRounder;
 import org.joda.time.DateTime;
@@ -23,7 +25,9 @@ public class User {
     private int gender;
     private LocalDate dateOfBirth;
 
-    public User(int userId, String username, String password, double weight, double height, int gender, LocalDate dateOfBirth) {
+    @JsonCreator
+    public User(@JsonProperty("userId")int userId,@JsonProperty("username") String username,@JsonProperty("password")
+    String password,@JsonProperty("weight") double weight,@JsonProperty("height") double height,@JsonProperty("gender") int gender,@JsonProperty("dateOfBirth") LocalDate dateOfBirth) {
         setUserId(userId);
         setUsername(username);
         setPassword(password);
@@ -109,7 +113,7 @@ public class User {
     }
 
     //normal date version
-    public LocalDate getJavaDateOfBirth(){
+    public LocalDate getDateOfBirth(){
         return dateOfBirth;
     }
 

@@ -1,31 +1,25 @@
 package com.macrosAndMeals.dao;
 
 import com.macrosAndMeals.model.User;
-import org.eclipse.jetty.http.MetaData;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
-import com.google.gson.Gson;
-
 public class UserDao {
-    public String insertUser(User u, Connection c) throws SQLException {
+    public boolean insertUser(User u, Connection c) throws SQLException {
         String insertUserQuery = "insert into User values (0,?,?,?,?,?,?);";
 
         PreparedStatement st = c.prepareStatement(insertUserQuery);
-        st.setString(2,u.getUsername());
-        st.setString(3,u.getPassword());
-        st.setString(4,String.valueOf(u.getWeight()));
-        st.setString(5,String.valueOf(u.getHeight()));
-        st.setString(6,String.valueOf(u.getGender()));
-        st.setString(7,u.getSQLDateOfBirth());
-
-        st.execute();
-        return "finished";
+        st.setString(1,u.getUsername());
+        st.setString(2,u.getPassword());
+        st.setString(3,String.valueOf(u.getWeight()));
+        st.setString(4,String.valueOf(u.getHeight()));
+        st.setString(5,String.valueOf(u.getGender()));
+        st.setString(6,u.getDateOfBirth().toString());
+        return st.execute();
     }
-        public List<User> selectAllUsers(Connection c) throws SQLException {
+    public List<User> selectAllUsers(Connection c) throws SQLException {
         String selectUserQuery = "Select userID,username,password,weight,height,gender,dateOfBirth from User";
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery(selectUserQuery);
@@ -33,31 +27,31 @@ public class UserDao {
         while (rs.next()) {
 
             LocalDate dob = rs.getDate("dateOfBirth").toLocalDate();
-            System.out.println(dob);
             users.add(new User(rs.getInt("userId"), rs.getString("username"), rs.getString("password"), rs.getDouble("weight"), rs.getDouble("height"), rs.getInt("gender"), dob));
         }
         return users;
     }
     public User selectUser(int userId, Connection c) throws SQLException {
-        String selectUserQuery = "Select userID,username,password,weight,height,gender,dateOfBirth from User where userID = " +userId +";";
+        String selectUserQuery = "Select userID,username,password,weight,height,gender,dateOfBirth from User where userID = " + userId + ";";
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery(selectUserQuery);
-        return new User(rs.getInt("userId"),rs.getString("username"),rs.getString("password"),rs.getDouble("weight"),rs.getDouble("height"),rs.getInt("gender"), LocalDate.parse(rs.getString("dateOfBirth")));
+        LocalDate dob = rs.getDate("dateOfBirth").toLocalDate();
+        return new User(rs.getInt("userId"), rs.getString("username"), rs.getString("password"), rs.getDouble("weight"), rs.getDouble("height"), rs.getInt("gender"), dob);
     }
-    public String deleteUser(int userId, Connection c) throws SQLException {
+    public boolean deleteUser(int userId, Connection c) throws SQLException {
         String deleteUserQuery = "delete from User where userID = " +userId +";";
         Statement st = c.createStatement();
-        st.execute(deleteUserQuery);
-        return "finished";
+        return st.execute(deleteUserQuery);
     }
-    public String updateUser(User u, Connection c) throws SQLException {
+    public boolean updateUser(User u, Connection c) throws SQLException {
         String updateUserQuery = "update User set username = '" + u.getUsername()
                 + "', password = '" + u.getPassword()
                 + "', weight = " + u.getWeight()
                 + ", height = " + u.getHeight()
                 + ", gender = " + u.getGender()
-                + ", dateOfBirth = '" + u.getSQLDateOfBirth() + "';";
-        c.createStatement().execute(updateUserQuery);
-        return "finished";
+                + ", dateOfBirth = '" + u.getDateOfBirth()
+                + "' where userId =" + u.getUserId() + ";";
+        ;
+        return c.createStatement().execute(updateUserQuery);
     }
 }

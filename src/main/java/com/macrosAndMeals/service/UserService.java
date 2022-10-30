@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserService {
-    public String insertUser(User u){
+    public boolean insertUser(User u){
         try {
             UserDao dao = new UserDao();
             return dao.insertUser(u, ConnectionDB.getConnection());
@@ -19,14 +19,14 @@ public class UserService {
             System.out.println("SQL ERROR, User not Inserted: ");
             System.out.println(u.toString());
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return false;
         }
         catch (Exception e)
         {
             System.out.println("NOT A SQL ERROR, User not Inserted: ");
             System.out.println(u.toString());
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return false;
         }
     }
     public List<User> selectAllUsers(){
@@ -50,31 +50,6 @@ public class UserService {
             return null;
         }
     }
-//    public Response selectAllUsers(){
-//        try {
-//            UserDao dao = new UserDao();
-//            List<User> users = dao.selectAllUsers(ConnectionDB.getConnection());
-//            System.out.println(users);
-//            if (users.isEmpty()) {
-//                System.out.println("SQL ran but returned empty user set");
-//                return Response.status(Response.Status.NO_CONTENT).build();
-//            }
-//            return Response
-//                    .status(Response.Status.OK)
-//                    .entity(users)
-//                    .build();
-//        }
-//        catch (SQLException e){
-//            System.out.println("SQL ERROR, can't select users: ");
-//            System.out.println(e.getMessage());
-//            return Response.serverError().build();
-//        }
-//        catch (Exception e){
-//            System.out.println("NOT A SQL ERROR, Can't select users: ");
-//            System.out.println(e.getMessage());
-//            return Response.status(Response.Status.fromStatusCode(444)).build();
-//        }
-//    }
     public User selectUser(int userId){
         try{
             UserDao dao = new UserDao();
@@ -96,7 +71,7 @@ public class UserService {
             return null;
         }
     }
-    public String deleteUser(int userId){
+    public boolean deleteUser(int userId){
         try{
             UserDao dao = new UserDao();
             return dao.deleteUser(userId,ConnectionDB.getConnection());
@@ -104,15 +79,15 @@ public class UserService {
         catch (SQLException e){
             System.out.println("SQL ERROR, can't delete user " + userId);
             System.out.println(e.getMessage());
-            return null;
+            return false;
         }
         catch (Exception e){
             System.out.println("NOT A SQL ERROR, Can't delete user " + userId);
             System.out.println(e.getMessage());
-            return null;
+            return false;
         }
     }
-    public String updateUser(User u){
+    public boolean updateUser(User u){
         try{
             UserDao dao = new UserDao();
             return dao.updateUser(u,ConnectionDB.getConnection());
@@ -120,12 +95,12 @@ public class UserService {
         catch (SQLException e){
             System.out.println("SQL ERROR, can't update user " + u.getUserId());
             System.out.println(e.getMessage());
-            return null;
+            return false;
         }
         catch (Exception e){
             System.out.println("NOT A SQL ERROR, Can't update user " + u.getUserId());
             System.out.println(e.getMessage());
-            return null;
+            return false;
         }
     }
 }
