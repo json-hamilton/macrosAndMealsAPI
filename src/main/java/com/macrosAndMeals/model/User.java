@@ -16,6 +16,7 @@ import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 
 public class User {
+    //TODO hash the passwords figure it out bro
     private final UserValidation validation = new UserValidation();
     private int userId;
     private String username;

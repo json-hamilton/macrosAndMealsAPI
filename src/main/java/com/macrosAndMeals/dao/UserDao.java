@@ -35,6 +35,7 @@ public class UserDao {
         String selectUserQuery = "Select userID,username,password,weight,height,gender,dateOfBirth from User where userID = " + userId + ";";
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery(selectUserQuery);
+        rs.next();
         LocalDate dob = rs.getDate("dateOfBirth").toLocalDate();
         return new User(rs.getInt("userId"), rs.getString("username"), rs.getString("password"), rs.getDouble("weight"), rs.getDouble("height"), rs.getInt("gender"), dob);
     }

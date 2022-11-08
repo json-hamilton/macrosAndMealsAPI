@@ -1,8 +1,22 @@
 package com.macrosAndMeals.validation;
 
+import com.macrosAndMeals.model.Meal;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class MealValidation {
+    public boolean checkMeal(Meal m){
+        return checkMealId(m.getMealId())
+                && checkName(m.getName())
+                && checkUrl(m.getUrl())
+                && checkCalories(m.getCalories())
+                && checkFat(m.getFat())
+                && checkCarbs(m.getCarbs())
+                && checkProtein(m.getProtein())
+                && checkLikes(m.getLikes())
+                && checkDateCreated(m.getDateCreated());
+    }
     public boolean checkMealId(int mealId){
         if (mealId>=0){
             return true;
@@ -11,7 +25,7 @@ public class MealValidation {
         return false;
     }
     public boolean checkName(String name){
-        if (name.matches("^[A-Za-z]\\w{3,250}$")){
+        if (name.matches("^[a-zA-Z\\s]{3,250}$")){
             return true;
         }
         System.out.println("Name cannot have special characters and must be less than 250 characters, " + name);
@@ -62,5 +76,12 @@ public class MealValidation {
         }
         System.out.println("Cannot have a negative number of likes " + likes);
         return false;
+    }
+    public boolean checkDateCreated(LocalDate dateCreated){
+        if (dateCreated.isAfter(LocalDate.now())){
+            System.out.println("Cannot have a date created after today: " +dateCreated);
+            return false;
+        }
+        return true;
     }
 }

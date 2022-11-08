@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.macrosAndMeals.validation.MealValidation;
 
+import java.time.LocalDate;
+
 public class Meal {
     //think about wether you should have a private and public bool
     //probably not tbh
@@ -37,8 +39,9 @@ public class Meal {
     // so it doesnt need a linking tablejust when retrueving the meals in the set just do
     //get mealid where userId = ... so that all meal id are retrueved then get meals with that meal id
 
+    //a paid user can pay to save their meals or to get more generations or something.
 
-    private MealValidation validation = new MealValidation();
+    private final MealValidation validation = new MealValidation();
     private int mealId;
     private String name;
     private String url;
@@ -47,11 +50,12 @@ public class Meal {
     private double carbs;
     private double protein;
     private int likes;
+    private LocalDate dateCreated;
 
     @JsonCreator
     public Meal(@JsonProperty("mealId")int mealId, @JsonProperty("name")String name,@JsonProperty("url") String url,
                 @JsonProperty("calories")double calories, @JsonProperty("fat")double fat,
-                @JsonProperty("carbs")double carbs, @JsonProperty("protein")double protein,@JsonProperty("likes") int likes) {
+                @JsonProperty("carbs")double carbs, @JsonProperty("protein")double protein,@JsonProperty("likes") int likes,@JsonProperty("dateCreated") LocalDate dateCreated) {
         setMealId(mealId);
         setName(name);
         setUrl(url);
@@ -60,6 +64,7 @@ public class Meal {
         setCarbs(carbs);
         setProtein(protein);
         setLikes(likes);
+        setDateCreated(dateCreated);
     }
 
     public Meal() {
@@ -145,4 +150,12 @@ public class Meal {
             this.likes = likes;
         }
     }
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
 }
