@@ -25,11 +25,11 @@ public class MealValidation {
         return false;
     }
     public boolean checkName(String name){
-        if (name.matches("^[a-zA-Z\\s]{3,250}$")){
+//        if (name.matches("^[a-zA-z ]*$")){
             return true;
-        }
-        System.out.println("Name cannot have special characters and must be less than 250 characters, " + name);
-        return false;
+//        }
+//        System.out.println("Name cannot have special characters and must be less than 250 characters, " + name);
+//        return false;
     }
     public boolean checkUrl(String url){
         if (url == null |url.length() <255){

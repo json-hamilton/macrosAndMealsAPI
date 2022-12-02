@@ -2,8 +2,8 @@ package com.macrosAndMeals.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.macrosAndMeals.dao.MealDao;
 import com.macrosAndMeals.model.*;
 import com.macrosAndMeals.service.MealService;
 import com.macrosAndMeals.service.UserCreatedMealService;
@@ -15,12 +15,20 @@ import org.json.JSONObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/api")
 @Api("Macros and Meals API")
 public class WebService {
 //TODO posts and gets all work, now test the puts and deletes
+    //TODO upload all these to lambda and work on the frontend? i don't believe this is it but i cant think rn of any more
+    //https://nicepage.com/st/2646275/health-and-fitness-club-website-template
+    //website template
     //users
     @GET
     @Path("/user/all")
@@ -294,4 +302,57 @@ public class WebService {
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
+    @POST
+    @Path("/meals/generate")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response generateMeals(Macros m){
+        MealService mealService = new MealService();
+        List<Meal> meals = mealService.generateMeals(m);
+        return Response.status(Response.Status.OK)
+                .type(MediaType.APPLICATION_JSON)
+                .entity(meals)
+                .build();
+//      should return first 3 from the bodybuilding.com ones
+//        {
+//            "calories": 1344,
+//                "fat": 28,
+//                "carbs": 128,
+//                "protein": 146,
+//                "numMeals": 3
+//        }
+    }
+    @POST
+    @Path("/meals/addFromJSONFile")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addMeal(String filePath){
+        MealService s = new MealService();
+        try {
+            JsonArray j = JsonParser.parseReader(new FileReader(filePath)).getAsJsonArray();
+            for (int i = 0; i < j.size(); i++) {
+                try {
+                    String name = j.get(i).getAsJsonObject().get("name").getAsString();
+                    String url = j.get(i).getAsJsonObject().get("url").getAsString();
+                    double calories = j.get(i).getAsJsonObject().get("macros").getAsJsonArray().get(0).getAsJsonObject().get("value").getAsDouble();
+                    double carbs = Double.parseDouble(j.get(i).getAsJsonObject().get("macros").getAsJsonArray().get(1).getAsJsonObject().get("value").getAsString().replace('g',' ').trim());
+                    double protein = Double.parseDouble(j.get(i).getAsJsonObject().get("macros").getAsJsonArray().get(2).getAsJsonObject().get("value").getAsString().replace('g',' ').trim());
+                    double fat = Double.parseDouble(j.get(i).getAsJsonObject().get("macros").getAsJsonArray().get(3).getAsJsonObject().get("value").getAsString().replace('g',' ').trim());
+                    int likes = -1;
+                    LocalDate dateCreated = LocalDate.parse(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
+                    Meal m = new Meal(0,name,url,calories,fat,carbs,protein,likes,dateCreated);
+                    s.insertMeal(m);
+                }
+                catch (Exception e){
+                    System.out.println("Couldnt insert meal " + i + "Error" + e.getMessage());
+                }
+            }
+        }
+        catch (Exception e){
+            System.out.println("Couldnt find file");
+            return Response.status(404).build();
+        }
+        return Response.status(200).build();
+    }
+
 }

@@ -1,10 +1,12 @@
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\model\UserCreatedMeal.java
+C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\model\FullUserCreatedMeal.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\dao\UserDao.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\dao\MealDao.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\validation\UserValidation.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\validation\UserCreatedMealValidation.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\core\ConnectionDB.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\resources\Message.java
+C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\model\Macros.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\WebServiceConfiguration.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\validation\MealValidation.java
 C:\Users\Jason\IdeaProjects\MacroAndMealsAPI\src\main\java\com\macrosAndMeals\model\UserCreatedMeal_Ingredient.java
