@@ -31,6 +31,15 @@ public class WebService {
     //website template
     //users
     @GET
+    @Path("/testEndpoint")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response returnTestData() {
+        return Response.status(Response.Status.OK)
+                .type(MediaType.APPLICATION_JSON)
+                .entity("Test")
+                .build();
+    }
+    @GET
     @Path("/user/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
