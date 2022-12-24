@@ -1,3 +1,4 @@
+com\macrosAndMeals\model\FullUserCreatedMeal.class
 com\macrosAndMeals\model\Meal.class
 com\macrosAndMeals\validation\MealValidation.class
 com\macrosAndMeals\model\UserCreatedMeal.class
@@ -13,6 +14,7 @@ com\macrosAndMeals\dao\MealDao.class
 com\macrosAndMeals\resources\Message.class
 com\macrosAndMeals\resources\WebService.class
 com\macrosAndMeals\validation\UserCreatedMealValidation.class
+com\macrosAndMeals\model\Macros.class
 com\macrosAndMeals\WebServiceConfiguration.class
 com\macrosAndMeals\model\UserCreatedMeal_Ingredient.class
 com\macrosAndMeals\model\User.class

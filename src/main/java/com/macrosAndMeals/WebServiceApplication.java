@@ -1,13 +1,11 @@
 package com.macrosAndMeals;
 
-import com.macrosAndMeals.model.User;
 import com.macrosAndMeals.resources.WebService;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.*;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
-import org.joda.time.DateTime;
 
 public class WebServiceApplication extends Application<WebServiceConfiguration> {
 
