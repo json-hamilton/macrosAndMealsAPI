@@ -30,6 +30,10 @@ public class WebService {
     //https://nicepage.com/st/2646275/health-and-fitness-club-website-template
     //website template
     //users
+
+    //so the problem is that it cant get c, because i think the db.properties is in thee gitignore so it cant get the database creds. therefore change it to use env variaables. and then give the ecr and apprunner the env variables and then it will get c through that. if u d that and problem persists go to cloudatch log insights.
+   //docker build --build-arg DB_USERNAME=admin --build-arg DB_PASSWORD=48powerLaws! --build-arg DB_HOST=macrosandmeals.c7ndwn3styzr.eu-west-2.rds.amazonaws.com --build-arg DB_NAME=MacrosAndMeals -t envtest .
+    //to fix swagger not returnng, change scheme at top left to https
     @GET
     @Path("/testEndpoint")
     @Produces(MediaType.APPLICATION_JSON)

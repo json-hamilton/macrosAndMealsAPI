@@ -12,29 +12,26 @@ public class ConnectionDB {
         String user;
         String password;
         String host;
+        String name;
 
         if (conn != null) {
             return conn;
         }
 
         try {
-            FileInputStream propsStream =
-                    new FileInputStream("db.properties");
 
-            Properties props = new Properties();
-            props.load(propsStream);
+            user            = System.getenv("DB_USERNAME");
+            password        = System.getenv("DB_PASSWORD");
+            host            = System.getenv("DB_HOST");
+            name            = System.getenv("DB_NAME");
 
-            user            = props.getProperty("user");
-            password        = props.getProperty("password");
-            host            = props.getProperty("host");
-
-            if (user == null || password == null || host == null)
+            if (user == null || password == null || host == null || name == null) {
                 throw new IllegalArgumentException(
-                        "Properties file must exist and must contain "
-                                + "user, password, and host properties.");
+                        "Environment variables not set.");
+            }
 
             conn = DriverManager.getConnection("jdbc:mysql://"
-                    + host + "/MacrosAndMeals?useSSL=false", user, password);
+                    + host + "/" + name + "?useSSL=false", user, password);
             return conn;
 
         } catch (Exception e) {
