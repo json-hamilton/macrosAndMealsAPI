@@ -3,21 +3,24 @@ package com.macrosAndMeals.core;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionDB {
     private static Connection conn;
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException {
         String user;
         String password;
         String host;
         String name;
 
         if (conn != null) {
-            return conn;
+            if (conn.isValid(5)) {
+                return conn;
+            }
+            conn.close();
         }
-
         try {
 
             user            = System.getenv("DB_USERNAME");
